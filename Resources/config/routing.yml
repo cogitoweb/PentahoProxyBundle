@@ -1,0 +1,5 @@
+cogitoweb_pentaho_proxy:
+    path:       /report/{id}
+    defaults:   { _controller: CogitowebPentahoProxyBundle:Default:proxy }
+    requirements:
+        id: \d+

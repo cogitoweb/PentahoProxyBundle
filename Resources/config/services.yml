@@ -1,0 +1,4 @@
+services:
+#    cogitoweb_pentaho_proxy.example:
+#        class: Cogitoweb\PentahoProxyBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
