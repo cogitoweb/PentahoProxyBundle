@@ -1,7 +1,7 @@
 {
-	"name": "cogitoweb/PentahoProxyBundle",
+	"name": "cogitoweb/pentahoproxybundle",
 	"description": "Query Pentaho reports",
-	"type": "synfony-bundle",
+	"type": "symfony-bundle",
 	"authors": [
 		{
 			"name": "Daniele Artico",
