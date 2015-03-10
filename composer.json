@@ -1,5 +1,24 @@
 {
-    "require": {
-        "guzzlehttp/guzzle": "~5.2"
-    }
+	"name": "cogitoweb/PentahoProxyBundle",
+	"description": "Query Pentaho reports",
+	"type": "synfony-bundle",
+	"authors": [
+		{
+			"name": "Daniele Artico",
+			"email": "daniele.artico@cogitoweb.it"
+		}
+	],
+	"keywords": [
+		"pentaho bundle"
+	],
+	"autoload": {
+		"psr-0": {
+			"Cogitoweb\\PentahoProxyBundle": ""
+		}
+	},
+	"require": {
+		"symfony/symfony": "~2.3",
+		"guzzlehttp/guzzle": "~5.2"
+	},
+	"target-dir" : "Cogitoweb/PentahoProxyBundle"
 }
