@@ -185,6 +185,10 @@ class Db
      */
     public function setPassword($password)
     {
+		$initializationVectorSize = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CBC);
+		$initializationVector = mcrypt_create_iv($initializationVectorSize);
+		$this->setInitializationVector($initializationVector);
+		
 		$this->password = openssl_encrypt(
 			$password,
 			'AES-256-CBC',
@@ -218,7 +222,7 @@ class Db
      * @param string $initializationVector
      * @return PentahoProxyBundleDb
      */
-    public function setInitializationVector($initializationVector)
+    private function setInitializationVector($initializationVector)
     {
 		$this->initializationVector = base64_encode($initializationVector);
 		

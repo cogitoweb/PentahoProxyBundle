@@ -1,6 +1,7 @@
 <?php
 namespace Cogitoweb\PentahoProxyBundle\Controller;
 
+use Exception;
 use Cogitoweb\PentahoProxyBundle\DependencyInjection\Pentaho;
 use Cogitoweb\PentahoProxyBundle\Entity\Db;
 use Cogitoweb\PentahoProxyBundle\Entity\Report;
@@ -9,32 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller {
-	const PENTAHO_API = '/pentaho/api';
-	protected $shortcuts = [
-		'csv'       => 'table/csv;page-mode=stream',
-		'email'     => 'mime-message/text/html',
-		'excel2007' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;page-mode=flow',
-		'excel'     => 'table/excel;page-mode=flow',
-		'html'      => 'table/html;page-mode=stream', // 'table/html;page-mode=page'
-		'pdf'       => 'pageable/pdf',
-		'png'       => 'pageable/X-AWT-Graphics;image-type=png',
-		'rtf'       => 'table/rtf;page-mode=flow',
-		'text'      => 'pageable/text',
-		'xml'       => 'table/xml' // 'pageable/xml'
-	];
-	
-	protected $client;
-	protected $clientRequest;
-	protected $clientResponse;
-	protected $symfonyResponse;
-
 	public function proxyAction($id) {
-		$em = $this->getDoctrine()->getManager();
 		$report = $this->getDoctrine()->getRepository('CogitowebPentahoProxyBundle:Report')->find($id);
 		/* @var $report Report */
 		
 		if (!$report) {
-			return new Response();
+			throw $this->createNotFoundException('The id ' . $id . ' does not exist');
 		}
 		
 		$db = $report->getDb();
@@ -46,21 +27,25 @@ class DefaultController extends Controller {
 			$db->getPassword()
 		);
 		
+		$pentaho->setPath($report->getPath());
+		$pentaho->setQuery($report->getParams());
+		
+		if ($pentaho->hasEmptyParams()) {
+			throw new Exception('Empty parameter(s) found in ' . $report->getParams());
+		}
+		
 		try {
 			$pentaho->setOutputFormat($report->getOutputFormat());
 			$pentaho->setOutputType($report->getOutputType());
 		} catch (InvalidArgumentException $e) {}
 		
-		$result = $pentaho->query(
-			$report->getPath(),
-			$report->getParams()
-		);
-		$result = $pentaho->parseResponse($result);
+		$result = $pentaho->query();
+		$parsedResult = $pentaho->parseResponse($result);
 		
 		$response = new Response();
-		$response->setContent($result->getBody());
-		$response->setStatusCode($result->getStatusCode());
-		$response->headers->add($result->getHeaders());
+		$response->setContent($parsedResult->getBody());
+		$response->setStatusCode($parsedResult->getStatusCode());
+		$response->headers->add($parsedResult->getHeaders());
 		$response->prepare(Request::createFromGlobals());
 		
 		return $response;

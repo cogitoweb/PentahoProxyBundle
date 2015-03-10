@@ -140,6 +140,7 @@ SELECT pg_catalog.setval('pentaho_proxy_bundle_db_id_seq', 1, true);
 --
 
 COPY pentaho_proxy_bundle_report (id, db_id, output_format, output_type, path, params, form) FROM stdin;
+3	1	html	view	:home:admin:openerp:openerp_attivita.prpt	progetto_id=266&annomese=$	\N
 1	1	html	view	:home:admin:openerp:openerp_attivita.prpt	progetto_id=266&annomese=01/2014	\N
 2	1	pdf	download	:home:admin:openerp:openerp_attivita.prpt	progetto_id=266&annomese=01/2014	\N
 \.
@@ -149,7 +150,7 @@ COPY pentaho_proxy_bundle_report (id, db_id, output_format, output_type, path, p
 -- Name: pentaho_proxy_bundle_report_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('pentaho_proxy_bundle_report_id_seq', 2, true);
+SELECT pg_catalog.setval('pentaho_proxy_bundle_report_id_seq', 3, true);
 
 
 --
