@@ -32,8 +32,11 @@ class DefaultController extends Controller {
 			$db->getPassword()
 		);
 		
+		parse_str($report->getParams(), $reportParams);
+		parse_str($this->getRequest()->getQueryString(), $queryString);
+		
 		$pentaho->setPath($report->getPath());
-		$pentaho->setQuery(array_merge($report->getParams(), $this->getRequest()->getQueryString()));
+		$pentaho->setQuery(array_merge($reportParams, $queryString));
 		
 		if ($pentaho->hasEmptyParams()) {
 			throw new Exception('Empty parameter(s) found in ' . $report->getParams());
