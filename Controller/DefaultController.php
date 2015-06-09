@@ -37,6 +37,11 @@ class DefaultController extends Controller {
 		$db = $report->getDb();
 		/* @var $db Db */
 		
+//		$db->setPassword('');
+//		$em = $this->getDoctrine()->getManager();
+//		$em->persist($db);
+//		$em->flush();
+		
 		$pentaho = new Pentaho(
 			$db->getHost(),
 			$db->getUsername(),
