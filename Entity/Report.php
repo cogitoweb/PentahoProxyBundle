@@ -59,16 +59,16 @@ class Report
     /**
      * @var string
      *
-     * @ORM\Column(name="class", type="string", length=255, nullable=true)
+     * @ORM\Column(name="form", type="string", length=255, nullable=true)
      */
-    private $class;
+    private $form;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="form", type="string", length=255, nullable=true)
+     * @ORM\Column(name="template", type="string", length=255, nullable=true)
      */
-    private $form;
+    private $template;
 
 	/**
      * @ORM\ManyToOne(targetEntity="Db", inversedBy="reports")
@@ -201,29 +201,6 @@ class Report
     }
 
     /**
-     * Set class
-     *
-     * @param string $class
-     * @return PentahoProxyBundleReport
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-
-        return $this;
-    }
-
-    /**
-     * Get class
-     *
-     * @return string 
-     */
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
      * Set form
      *
      * @param string $form
@@ -244,6 +221,29 @@ class Report
     public function getForm()
     {
         return $this->form;
+    }
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return PentahoProxyBundleReport
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string 
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
     /**
