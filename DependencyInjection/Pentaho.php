@@ -74,12 +74,24 @@ class Pentaho {
 		return $this->request->getScheme();
 	}
 
+	private function setScheme($scheme) {
+		$this->request->setScheme($scheme);
+	}
+
 	public function getHost() {
 		return $this->request->getHost();
 	}
 
+	public function setHost($host) {
+		$this->request->setHost($host);
+	}
+
 	public function getPort() {
 		return $this->request->getPort();
+	}
+
+	public function setPort($port) {
+		$this->request->setPort($port);
 	}
 
 	public function getUsername() {
@@ -94,6 +106,10 @@ class Pentaho {
 		return null;
 	}
 
+	public function setUsername($username) {
+		$this->request->setHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $this->getPassword()));
+	}
+
 	public function getPassword() {
 		$pattern = '/^Basic (.+)$/';
 		$subject = $this->request->getHeader('Authorization');
@@ -106,58 +122,28 @@ class Pentaho {
 		return null;
 	}
 
-	public function getPath() {
-		return $this->request->getPath();
-	}
-
-	public function getQuery() {
-		return $this->request->getQuery()->toArray();
-	}
-
-	public function getOutputFormat() {
-		return $this->outputFormat;
-	}
-
-	public function getOutputType() {
-		return $this->outputType;
-	}
-
-	public function hasEmptyParams() {
-		foreach ($this->getQuery() as $value) {
-			if ($value == self::EMPTY_PARAM_MARKER) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private function setScheme($scheme) {
-		$this->request->setScheme($scheme);
-	}
-
-	public function setHost($host) {
-		$this->request->setHost($host);
-	}
-
-	public function setPort($port) {
-		$this->request->setPort($port);
-	}
-
-	public function setUsername($username) {
-		$this->request->setHeader('Authorization', 'Basic ' . base64_encode($username . ':' . $this->getPassword()));
-	}
-
 	public function setPassword($password) {
 		$this->request->setHeader('Authorization', 'Basic ' . base64_encode($this->getUsername() . ':' . $password));
+	}
+
+	public function getPath() {
+		return $this->request->getPath();
 	}
 
 	public function setPath($path) {
 		$this->request->setPath(self::PENTAHO_API_PATH . '/repos/' . $path . '/generatedContent');
 	}
 
+	public function getQuery() {
+		return $this->request->getQuery()->toArray();
+	}
+
 	public function setQuery($query) {
 		$this->request->setQuery($query);
+	}
+
+	public function getOutputFormat() {
+		return $this->outputFormat;
 	}
 
 	/**
@@ -249,6 +235,10 @@ class Pentaho {
 		}
 	}
 
+	public function getOutputType() {
+		return $this->outputType;
+	}
+
 	/**
 	 * Sets the behavior of parseResponse() to return the query response as a downloadable file or to show it straightforward
 	 * @param string $outputType Must be "download" or "view", respectively
@@ -265,6 +255,16 @@ class Pentaho {
 			default:
 				throw new InvalidArgumentException();
 		}
+	}
+
+	public function hasEmptyParams() {
+		foreach ($this->getQuery() as $value) {
+			if ($value == self::EMPTY_PARAM_MARKER) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

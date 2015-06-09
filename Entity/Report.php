@@ -59,6 +59,13 @@ class Report
     /**
      * @var string
      *
+     * @ORM\Column(name="class", type="string", length=255, nullable=true)
+     */
+    private $class;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="form", type="string", length=255, nullable=true)
      */
     private $form;
@@ -191,6 +198,29 @@ class Report
     public function getParams()
     {
         return $this->params;
+    }
+
+    /**
+     * Set class
+     *
+     * @param string $class
+     * @return PentahoProxyBundleReport
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+
+        return $this;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string 
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 
     /**

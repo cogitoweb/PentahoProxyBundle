@@ -3,3 +3,9 @@ cogitoweb_pentaho_proxy:
     defaults:   { _controller: CogitowebPentahoProxyBundle:Default:proxy }
     requirements:
         id: \d+
+        
+cogitoweb_pentaho_require_parameters:
+    path:       /report/{id}/complete-parameters
+    defaults:   { _controller: CogitowebPentahoProxyBundle:Default:requireParameters }
+    requirements:
+        id: \d+
