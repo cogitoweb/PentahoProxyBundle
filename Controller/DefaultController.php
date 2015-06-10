@@ -77,10 +77,8 @@ class DefaultController extends Controller {
 		$params = $this->getRequest()->query->all();
 		
 		// Strip $ parameters
-		array_walk($params, function (&$key, $value) {
-			if (strpos($value, Pentaho::EMPTY_PARAM_MARKER) !== false) {
-				unset($key);
-			}
+		$params = array_filter($params, function ($value) {
+			return strpos($value, Pentaho::EMPTY_PARAM_MARKER) === false;
 		});
 		
 		$form = $this->createForm(
