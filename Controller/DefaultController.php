@@ -75,6 +75,14 @@ class DefaultController extends Controller {
 		
 		$formClass = $report->getForm();
 		$params = $this->getRequest()->query->all();
+		
+		// Strip $ parameters
+		array_walk($params, function (&$key, $value) {
+			if (strpos($value, Pentaho::EMPTY_PARAM_MARKER) !== false) {
+				unset($key);
+			}
+		});
+		
 		$form = $this->createForm(
 			new $formClass(),
 			$params
