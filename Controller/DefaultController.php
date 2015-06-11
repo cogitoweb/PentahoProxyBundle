@@ -83,7 +83,8 @@ class DefaultController extends Controller {
 		
 		$form = $this->createForm(
 			new $formClass(),
-			$params
+			$params,
+			['em' => $this->getDoctrine()->getManager()]
 		);
 		
 		$form->handleRequest($this->getRequest());
