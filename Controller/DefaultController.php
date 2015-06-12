@@ -97,6 +97,10 @@ class DefaultController extends Controller {
 						return $parameter->format('Y-m-d');
 					}
 					
+					if (is_object($parameter)) {
+						return $parameter->getId();
+					}
+					
 					return $parameter;
 				},
 				$form->getData()
