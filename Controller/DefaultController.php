@@ -101,6 +101,10 @@ class DefaultController extends Controller {
 						return $parameter->getId();
 					}
 					
+					if (is_array($parameter)) {
+						return implode(',', $parameter);
+					}
+					
 					return $parameter;
 				},
 				$form->getData()
