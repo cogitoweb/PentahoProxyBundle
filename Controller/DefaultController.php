@@ -73,7 +73,7 @@ class DefaultController extends Controller {
 			throw $this->createNotFoundException('The id ' . $id . ' does not exist');
 		}
 		
-		$formClass = $report->getForm();
+		$formName = $report->getForm();
 		$params = $this->getRequest()->query->all();
 		
 		// Strip $ parameters
@@ -82,9 +82,8 @@ class DefaultController extends Controller {
 		});
 		
 		$form = $this->createForm(
-			new $formClass(),
-			$params,
-			['em' => $this->getDoctrine()->getManager()]
+			$formName,
+			$params
 		);
 		
 		$form->handleRequest($this->getRequest());
