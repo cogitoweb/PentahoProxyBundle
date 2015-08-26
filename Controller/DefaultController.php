@@ -92,6 +92,10 @@ class DefaultController extends Controller {
 			// Preparo i parametri
 			$parameters = array_map(
 				function ($parameter) {
+					if (is_null($parameter)) {
+						return '';
+					}
+					
 					if ($parameter instanceof \DateTime) {
 						return $parameter->format('Y-m-d');
 					}
