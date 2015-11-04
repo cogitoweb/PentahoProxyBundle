@@ -191,7 +191,7 @@ class Db
 		
 		$this->password = openssl_encrypt(
 			$password,
-			'AES-256-CBC',
+			'AES-128-CBC',
 			$this->secret,
 			null,
 			$this->getInitializationVector()
@@ -209,7 +209,7 @@ class Db
     {
 		return openssl_decrypt(
 			$this->password,
-			'AES-256-CBC',
+			'AES-128-CBC',
 			$this->secret,
 			null,
 			$this->getInitializationVector()
